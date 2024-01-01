@@ -3,6 +3,11 @@
   45'de bitiyor
 */
 
+// input 53 
+
+const int resetput = 53;
+bool is_reset = false;
+
 int randNumber;
 
 void setup() {
@@ -11,15 +16,29 @@ void setup() {
   for(int i = 30; i <= 45; i++) {
     pinMode(i, OUTPUT);
   }
+
+  pinMode(resetput, INPUT);
 }
 
 void loop() {
   all_led_on();
-  delay(5000);
+
+  reset();
+
+  delay(1000);
 }
 
 // rastgele sayı oluşturun 
-void random_num_creat(){randNumber = random(1000, 9999); Serial.println(randNumber);}
+void random_num_creat(){randNumber = random(1000, 9999); Serial.print(randNumber);}
+
+// resetleme kodu 
+void reset(){
+  // digitalWrite(pushput, 1);
+  if(){
+    
+  }
+
+}
 
 // ayrım 
 void yakim_two(){
