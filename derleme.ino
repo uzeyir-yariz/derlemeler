@@ -3,11 +3,6 @@
   45'de bitiyor
 */
 
-// input 53 
-
-const int resetput = 53;
-bool is_reset = false;
-
 int randNumber;
 
 void setup() {
@@ -23,22 +18,11 @@ void setup() {
 void loop() {
   all_led_on();
 
-  reset();
-
   delay(1000);
 }
 
 // rastgele sayı oluşturun 
 void random_num_creat(){randNumber = random(1000, 9999); Serial.print(randNumber);}
-
-// resetleme kodu 
-void reset(){
-  // digitalWrite(pushput, 1);
-  if(){
-    
-  }
-
-}
 
 // ayrım 
 void yakim_two(){
