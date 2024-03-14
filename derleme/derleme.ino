@@ -3,35 +3,78 @@
   45'de bitiyor
 */
 
+// ! ! ! burada ki kodlar oled için yazılmıştır 
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+
+#define OLED_RESET -1
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+void initOLED() {
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    for (;;);
+  }
+
+  display.display(); // Clear the buffer
+  delay(2000); // Pause for 2 seconds
+  display.clearDisplay(); // Clear the display buffer.
+}
+
+void displayText(const char* text) {
+  display.clearDisplay();
+  
+  display.setTextSize(5);      // Normal 1:1 pixel scale
+  display.setTextColor(SSD1306_WHITE); // Draw white text
+  display.setCursor(0,0);     // Start at top-left corner
+  display.println(text);
+
+  display.display();
+}
+// ! ! ! burada ki kodlar oled için yazılmıştır 
+
 int randNumber;
 
 void setup() {
   Serial.begin(9600);
-
+  random_num_creat();
+  initOLED(); // OLED ekranını başlat
   for(int i = 30; i <= 45; i++) {
     pinMode(i, OUTPUT);
   }
-
-  pinMode(resetput, INPUT);
 }
 
 void loop() {
+  random_num_creat();
+
+  String temp_rand = String(randNumber); 
+
+  Serial.print(temp_rand);
+
+  displayText(temp_rand.c_str()); // Metni ekranda göster
+
   all_led_on();
 
-  delay(1000);
+  delay(5000);
 }
 
 // rastgele sayı oluşturun 
-void random_num_creat(){randNumber = random(1000, 9999); Serial.print(randNumber);}
+void random_num_creat(){randNumber = random(1000, 9999);}
 
 // ayrım 
 void yakim_two(){
   if(randNumber % 2 == 0){
     digitalWrite(30, 1); // yeşil
-    digitalWrite(34, 0); // kırmızı 
+    digitalWrite(34, 0); // kırmızı
+    Serial.println(" 0'a tam bölünür");
   } else{
     digitalWrite(30, 0); // yeşil
     digitalWrite(34, 1); // kırmızı
+    Serial.println(" 0'a tam bölünmez");
   }}
 
 void yakim_three() {
@@ -104,8 +147,6 @@ void light_of(){for(int i = 30; i <= 45; i++){digitalWrite(i, 0);}}
 
 // tüm ledleri aktif eder
 void all_led_on(){
-  random_num_creat();
-
   yakim_two();
   yakim_three();
   yakim_four();
@@ -113,9 +154,9 @@ void all_led_on(){
   yakim_six();
   yakim_seven();
   yakim_eight();
-  yakim_nine();}
+  yakim_nine();
 
-
+}
 
 // özel ayar 
 void ileri_yakim(){
